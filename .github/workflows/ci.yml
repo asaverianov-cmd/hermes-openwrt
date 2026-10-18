@@ -69,7 +69,9 @@ jobs:
       # does not register that handler, so the container can't exec it; qemu-user-static
       # registration is idempotent and applies to every subsequent step of the job.
       - name: register x86 binfmt (arm64 runners)
-        run: docker run --rm --privileged multiarch/qemu-user-static:register --reset -p yes
+        run: |+
+          docker image rm multiarch/qemu-user-static:register || true
+          docker run --rm --platform linux/arm64 --privileged multiarch/qemu-user-static:register --reset -p yes
       # GL.iNet MediaTek router installs, so that gate-relabel.sh runs where it counts:
       # r4 shipped that label without bash and CI could not see it, because CI had
       # never produced it.
