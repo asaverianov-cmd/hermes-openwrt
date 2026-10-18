@@ -18,8 +18,15 @@ A security problem goes through [SECURITY.md](SECURITY.md), not a pull request o
 
 ## Building locally
 
-You need Docker on an aarch64 host: an Apple silicon Mac or an arm64 Linux machine. The
-OpenWrt SDK is not needed. On an x86 host the same commands run under QEMU and are very slow.
+Docker is required for the containerised build: the OpenWrt rootfs image, the `apk`
+packaging container and the build scripts all run inside Docker. The OpenWrt SDK is not
+needed.
+
+- **aarch64 hosts** (Apple silicon Mac or arm64 Linux): the same commands, no QEMU.
+- **x86_64 hosts**: a native x86_64 build needs no QEMU. Use `ARCH=x86_64` (image
+  `openwrt/rootfs:x86_64-25.12.4`); this is the architecture of the QEMU Standard PC
+  (i440FX + PIIX) routers this package installs on. See the x86_64 section in
+  `docs/build.md`.
 
 These are the commands CI runs, in its order:
 
@@ -27,8 +34,11 @@ These are the commands CI runs, in its order:
 # the agent, also relabelled for the Flint 2, Brume 2 and Beryl AX (aarch64_cortex-a53)
 EXTRA_ARCHES=aarch64_cortex-a53 ./package/hermes-agent/build-in-container.sh aarch64_generic
 
+# the agent, for a QEMU Standard PC (x86_64): builds and gates in CI
+./package/hermes-agent/build-in-container.sh x86_64
+
 # the Telegram add-on; it refuses to build before the base tree exists
-./package/hermes-agent-telegram/build-in-container.sh aarch64_generic
+./package/hermes-agent-telegram/build-in-container.sh x86_64
 
 # the LuCI app
 ./package/luci-app-hermes/build.sh
@@ -36,11 +46,13 @@ EXTRA_ARCHES=aarch64_cortex-a53 ./package/hermes-agent/build-in-container.sh aar
 # openwrt-mcp, which hermes-agent depends on, from the commit CI pins
 git clone https://github.com/TAIPANBOX/openwrt-mcp openwrt-mcp-src
 git -C openwrt-mcp-src checkout 8eff8349f4dcf34c12b309dc0655300680cb3d19
-OPENWRT_MCP_SRC="$PWD/openwrt-mcp-src" ./scripts/build-openwrt-mcp.sh aarch64_generic
+OPENWRT_MCP_SRC="$PWD/openwrt-mcp-src" ./scripts/build-openwrt-mcp.sh x86_64
 ```
 
 The last one needs Go at the version in `openwrt-mcp-src/go.mod`. The pinned commit is the
 one in `.github/workflows/ci.yml`; if they ever differ, the workflow is right.
+
+The CI matrix also includes `x86_64`, so the same checks that run on ARM run on x86_64.
 
 ## Which checks cover what
 

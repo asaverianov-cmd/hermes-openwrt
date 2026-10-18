@@ -49,10 +49,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # ARM only (2026-09-24): routers are what this package is for.
-        # aarch64 is what a router actually is, and the architecture the wheel bet is
-        # really about, so it is not optional.
-        arch: [aarch64_generic]
+        # ARM + x86_64: routers are what this package is for.
+        # aarch64 is what a router actually is; x86_64 is the QEMU Standard PC
+        # (i440FX + PIIX) target, built and gated the same way.
+        arch: [aarch64_generic, x86_64]
         suite: [core, runtime, teeth, usb, usb-teeth-0, usb-teeth-1, usb-teeth-2, usb-teeth-3, luci-teeth-0, luci-teeth-1, luci-teeth-2, luci-teeth-3, unlock, unlock-teeth-0, unlock-teeth-1, unlock-teeth-2, unlock-teeth-3]
     steps:
       - uses: actions/checkout@v4

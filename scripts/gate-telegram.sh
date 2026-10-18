@@ -33,7 +33,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 ARCH=${ARCH:-aarch64_generic}
 RELEASE=${RELEASE:-25.12.4}
 case "$ARCH" in
-	x86_64) IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:x86-64-$RELEASE} ;;
+	x86_64) IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:x86_64-$RELEASE} ;;
 	*)      IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:$ARCH-$RELEASE} ;;
 esac
 PLATFORM=${PLATFORM:-linux/$ARCH}

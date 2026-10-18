@@ -17,7 +17,7 @@ fi
 ARCH=${ARCH:-aarch64_generic}
 RELEASE=${RELEASE:-25.12.4}
 LINE=${RELEASE%.*}
-case "$ARCH" in x86_64) IMAGE="openwrt/rootfs:x86-64-$RELEASE";; *) IMAGE="openwrt/rootfs:$ARCH-$RELEASE";; esac
+case "$ARCH" in x86_64) IMAGE="openwrt/rootfs:x86_64-$RELEASE";; *) IMAGE="openwrt/rootfs:$ARCH-$RELEASE";; esac
 BUILD="$ROOT/build/$LINE/$ARCH"
 [ -d "$BUILD/tree" ] || { echo 'measured nothing: no built payload' >&2; exit 1; }
 # hermes-agent depends on openwrt-mcp (its owner profile pairs and configures it), so the

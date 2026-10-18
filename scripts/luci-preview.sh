@@ -32,7 +32,7 @@ PORT=${PORT:-8080}
 PASS=${PASS:-hermes-preview}
 NAME=${NAME:-hermes-luci-preview}
 case "$ARCH" in
-	x86_64) IMAGE="openwrt/rootfs:x86-64-$RELEASE" ;;
+	x86_64) IMAGE="openwrt/rootfs:x86_64-$RELEASE" ;;
 	*)      IMAGE="openwrt/rootfs:$ARCH-$RELEASE" ;;
 esac
 

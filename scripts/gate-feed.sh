@@ -30,7 +30,7 @@ ARCH=${ARCH:-aarch64_generic}
 RELEASE=${RELEASE:-25.12}
 FEED=${FEED:-$ROOT/feed-out}
 case "$ARCH" in
-	x86_64) IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:x86-64-25.12.4} ;;
+	x86_64) IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:x86_64-25.12.4} ;;
 	*)      IMAGE=${ROOTFS_IMAGE:-openwrt/rootfs:$ARCH-25.12.4} ;;
 esac
 PLATFORM=${PLATFORM:-linux/$ARCH}

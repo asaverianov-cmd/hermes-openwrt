@@ -57,6 +57,12 @@ private half until a person logs in and deletes the file. So CI builds and gates
 EXTRA_ARCHES=aarch64_cortex-a53 ./package/hermes-agent/build-in-container.sh aarch64_generic
 ```
 
+### x86_64 (QEMU Standard PC, i440FX + PIIX)
+
+```sh
+./package/hermes-agent/build-in-container.sh x86_64
+```
+
 Docker is required; the OpenWrt SDK is not. The build runs **inside** the OpenWrt release
 it targets, so the libc resolving the wheels is the one the router has. Cross-downloading
 with `pip --platform` looks simpler and does not work: `pydantic-core` ships stable-ABI
@@ -83,6 +89,7 @@ asyncio, multiprocessing, email, http, xml, decimal, curses, readline.
 - [x] Native package for OpenWrt 25.12 (apk); 24.10 was served until 2026-09-25 and is not any more
 - [x] Hermes 0.21.5 from a pinned upstream commit, libraries at upstream's locked versions
 - [x] `aarch64_cortex-a53` for the Flint 2 and Brume 2, plus `aarch64_generic`
+- [x] `x86_64` (QEMU Standard PC, i440FX + PIIX) builds and gates in CI
 - [x] LuCI interface with write-only key handling
 - [x] Signed feed, signed on a workstation
 - [x] Every gate runs on OpenWrt's own rootfs images in CI

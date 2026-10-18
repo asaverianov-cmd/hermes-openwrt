@@ -197,7 +197,7 @@ LINE=${RELEASE%%.*}.$(echo "$RELEASE" | cut -d. -f2)
 WORK="$ROOT/build/$LINE/$ARCH"
 
 case "$ARCH" in
-	x86_64) IMAGE="openwrt/rootfs:x86-64-$RELEASE" ;;
+	x86_64) IMAGE="openwrt/rootfs:x86_64-$RELEASE" ;;
 	*)      IMAGE="openwrt/rootfs:$ARCH-$RELEASE" ;;
 esac
 

@@ -26,7 +26,7 @@
 # What "trusted" means on the router
 #
 # apk trusts a key because the file is in /etc/apk/keys, and nothing more. Verified on
-# openwrt/rootfs:x86-64-25.12.4: without the key the feed's packages are not merely
+# openwrt/rootfs:x86_64-25.12.4: without the key the feed's packages are not merely
 # rejected, they are invisible, and `apk add hermes-agent` says "no such package" while
 # reporting two fewer packages available. With the key present both packages install
 # with no --allow-untrusted anywhere.

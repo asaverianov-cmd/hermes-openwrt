@@ -47,7 +47,7 @@ WORK="$ROOT/build/$LINE/$ARCH-telegram"
 BASE_TREE="$ROOT/build/$LINE/$ARCH/tree"
 
 case "$ARCH" in
-	x86_64) IMAGE="openwrt/rootfs:x86-64-$RELEASE" ;;
+	x86_64) IMAGE="openwrt/rootfs:x86_64-$RELEASE" ;;
 	*)      IMAGE="openwrt/rootfs:$ARCH-$RELEASE" ;;
 esac
 ALPINE=${ALPINE:-alpine@sha256:020dfcbaaf4cc1078bf2d9c7ba31a8466e334061dcd2f248001d68f79e52c000}
