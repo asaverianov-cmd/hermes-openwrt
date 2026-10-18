@@ -64,6 +64,12 @@ jobs:
         run: test "$(uname -m)" = aarch64 && uname -m
 
       # The aarch64 leg also emits the aarch64_cortex-a53 relabel, the label every
+      # Cross-arch x86_64 builds and gates run the target rootfs (and the gates) in a
+      # container whose /bin/sh is an x86_64 binary. GitHub's ubuntu-24.04-arm runner
+      # does not register that handler, so the container can't exec it; qemu-user-static
+      # registration is idempotent and applies to every subsequent step of the job.
+      - name: register x86 binfmt (arm64 runners)
+        run: docker run --rm --privileged multiarch/qemu-user-static:register --reset -p yes
       # GL.iNet MediaTek router installs, so that gate-relabel.sh runs where it counts:
       # r4 shipped that label without bash and CI could not see it, because CI had
       # never produced it.

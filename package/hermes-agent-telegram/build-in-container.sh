@@ -67,6 +67,10 @@ mkdir -p "$WORK"
 ARCHIVE=$("$ROOT/package/upstream/fetch.sh")
 
 echo "==> assembling the telegram tree inside $IMAGE"
+# Cross-arch: the target rootfs is a per-arch musl image, so its /bin/sh is an
+# x86_64 binary. GitHub's arm64 runners don't register the x86 binfmt handler, so
+# the container can't exec it; qemu-user-static registration is idempotent.
+docker run --rm --privileged multiarch/qemu-user-static:register --reset -p yes
 docker run -v "$ROOT/scripts/apk-retry.sh:/apk-retry.sh:ro" ${APK_CACHE:+-v "$APK_CACHE:/apk-cache"} --rm -i --platform "linux/$ARCH" \
 	-v "$SRC:/src:ro" -v "$WORK:/work" -v "$BASE_TREE:/base:ro" \
 	-v "$ROOT/package/upstream:/upstream-src:ro" -v "$ARCHIVE:/upstream/archive.tar.gz:ro" \
