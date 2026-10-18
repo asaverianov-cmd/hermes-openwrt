@@ -68,10 +68,14 @@ jobs:
       # container whose /bin/sh is an x86_64 binary. GitHub's ubuntu-24.04-arm runner
       # does not register that handler, so the container can't exec it; qemu-user-static
       # registration is idempotent and applies to every subsequent step of the job.
-      - name: register x86 binfmt (arm64 runners)
-        run: |+
-          docker image rm multiarch/qemu-user-static || true
-          docker run --rm --platform linux/arm64 --privileged multiarch/qemu-user-static --reset -p yes
+      # QEMU binfmt registration for arm64 runners. multiarch/qemu-user-static:latest is
+      # amd64-only on Docker Hub, so its :register image cannot run on the arm64 runner;
+      # setup-qemu-action writes the x86 binfmt entries into the shared binfmt_misc (the
+      # docker daemon reuses the host binfmt), which lets the amd64 containers below run.
+      - name: Set up QEMU (x86 emulation on arm64 runners)
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: linux/amd64
       # GL.iNet MediaTek router installs, so that gate-relabel.sh runs where it counts:
       # r4 shipped that label without bash and CI could not see it, because CI had
       # never produced it.
